@@ -1,5 +1,3 @@
-# Сделать: Поменять фон, ещё что-нибудь..., промотку на 10 сек.?
-# Скорость воспроизведения
 import sys
 from PyQt5.QtGui import QIcon, QFont, QPalette
 from PyQt5.QtCore import Qt, QUrl, QSize
