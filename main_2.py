@@ -196,8 +196,10 @@ class MainApp(WatchVid):
         if not isinstance(connector, DBConnect):
             raise TypeError(f"bad operand type'{type(connector)}'; expected: 'DataBaseConnector'")
         self.connector: DBConnect = connector
-        self.sp = []
         print('Построено окно приложения')
+
+    def err(self) -> None:
+        print('Упс... проверьте данные')
 
     def click(self):
 
@@ -206,13 +208,16 @@ class MainApp(WatchVid):
             print(self.name.text(), self.ssil_strok.text())
             NM = self.name.text()
             url = self.ssil_strok.text()
-            data = self.connector.watch_in_bd(NM, url)
-            if data:
-                print('Такая ссылка уже существует: ', url)
-                print('Пожалуйста, введите другое URL')
+            if 'https://www.youtube.com' in url:
+                data = self.connector.watch_in_bd(NM, url)
+                if data:
+                    print('Такая ссылка уже существует: ', url)
+                    print('Пожалуйста, введите другое URL')
+                else:
+                    print('Такого нет, сейчас исправим')
+                    self.connector.vnesti_v_bd(NM, url)
             else:
-                print('Такого нет, сейчас исправим')
-                self.connector.vnesti_v_bd(NM, url)
+                self.err()
         except Exception as error:
             error = error
 
